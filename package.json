@@ -1,0 +1,6 @@
+{
+  "name": "cortex-dataform",
+  "dependencies": {
+    "@dataform/core": "^2.1.0"
+  }
+}

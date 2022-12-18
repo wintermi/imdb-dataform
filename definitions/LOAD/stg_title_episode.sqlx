@@ -1,0 +1,29 @@
+config {
+  hasOutput: true,
+  type: "operations",
+  schema: dataform.config.vars.IMDB_RAW_DATA,
+  tags: ["LOAD_IMDB_DATA"]
+}
+
+
+CREATE OR REPLACE TABLE ${ self() }
+(
+    tconst STRING NOT NULL OPTIONS(description="Alphanumeric identifier of episode.")
+  , parent_tconst STRING OPTIONS(description="Alphanumeric identifier of the parent TV Series.")
+  , season_number INT64 OPTIONS(description="Season number the episode belongs to.")
+  , episode_number INT64 OPTIONS(description="Episode number of the tconst in the TV series.")
+);
+
+
+LOAD DATA INTO ${ self() }
+FROM FILES (
+  format = "CSV",
+  compression = "GZIP",
+  field_delimiter = "\t",
+  skip_leading_rows = 1,
+  allow_jagged_rows = true,
+  quote = "",
+  null_marker = "\\N",
+  uris = ["gs://${ dataform.config.vars.IMDB_GCS_BUCKET }/title.episode.tsv.gz"]
+);
+

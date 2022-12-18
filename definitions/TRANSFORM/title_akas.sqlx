@@ -1,0 +1,31 @@
+config {
+  type: "table",
+  schema: dataform.config.vars.IMDB_BASE_DATA,
+  description: "Contains the also known as (AKA) for titles",
+  columns: {
+    title_id: "A tconst, an alphanumeric unique identifier of the title.",
+    ordering: "A number to uniquely identify rows for a given title_id.",
+    title: "The localized title.",
+    region: "The region for this version of the title.",
+    language: "The language of the title.",
+    types: "Enumerated set of attributes for this alternative title. One or more of the following: 'alternative', 'dvd', 'festival', 'tv', 'video', 'working', 'original', 'imdbDisplay'. New values may be added in the future without warning.",
+    attributes: "Additional terms to describe this alternative title, not enumerated",
+    is_original_title: "False: not original title; True: original title."
+  },
+  assertions: {
+    uniqueKey: ["title_id", "ordering"]
+  },
+  tags: ["TRANSFORM_IMDB_DATA"]
+}
+
+
+SELECT
+    title_id
+  , ordering
+  , title
+  , region
+  , language
+  , types
+  , attributes
+  , is_original_title
+FROM ${ ref({ schema: dataform.config.vars.IMDB_RAW_DATA, name: "stg_title_akas" }) }

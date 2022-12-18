@@ -1,0 +1,28 @@
+config {
+  type: "table",
+  schema: dataform.config.vars.IMDB_BASE_DATA,
+  description: "Contains the ratings for each season of a TV-Series",
+  columns: {
+    tconst: "Alphanumeric identifier of the TV Series.",
+    season_number: "Season number the ratings belongs to.",
+    average_rating: "Weighted average of all the individual user ratings.",
+    average_votes: "Average number of votes the TV Series season has received per episode.",
+    num_votes: "Number of votes the TV Series season has received."
+  },
+  assertions: {
+    uniqueKey: ["tconst", "season_number"]
+  },
+  tags: ["TRANSFORM_IMDB_DATA"]
+}
+
+
+SELECT
+    e.parent_tconst AS tconst
+  , e.season_number
+  , AVG(r.average_rating) AS average_rating
+  , AVG(r.num_votes) AS average_votes
+  , SUM(r.num_votes) AS num_votes
+FROM ${ ref({ schema: dataform.config.vars.IMDB_BASE_DATA, name: "title_episode" }) } AS e
+  LEFT JOIN ${ ref({ schema: dataform.config.vars.IMDB_BASE_DATA, name: "title_ratings" }) } AS r
+    ON  e.tconst = r.tconst
+GROUP BY 1, 2

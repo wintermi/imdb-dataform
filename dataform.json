@@ -1,0 +1,12 @@
+{
+  "defaultSchema": "imdb",
+  "assertionSchema": "DF_ASSERTIONS",
+  "warehouse": "bigquery",
+  "defaultDatabase": "sydney-summit-2019",
+  "defaultLocation": "australia-southeast1",
+  "vars": {
+    "IMDB_GCS_BUCKET": "winter-imdb",
+    "IMDB_RAW_DATA": "imdb_staging",
+    "IMDB_BASE_DATA": "imdb"
+  }
+}

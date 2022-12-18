@@ -1,0 +1,21 @@
+config {
+  type: "table",
+  schema: dataform.config.vars.IMDB_BASE_DATA,
+  description: "Contains the rating and votes information for titles",
+  columns: {
+    tconst: "Alphanumeric unique identifier for title.",
+    average_rating: "Weighted average of all the individual user ratings.",
+    num_votes: "Number of votes the title has received."
+  },
+  assertions: {
+    uniqueKey: ["tconst"]
+  },
+  tags: ["TRANSFORM_IMDB_DATA"]
+}
+
+
+SELECT
+    tconst
+  , average_rating
+  , num_votes
+FROM ${ ref({ schema: dataform.config.vars.IMDB_RAW_DATA, name: "stg_title_ratings" }) }

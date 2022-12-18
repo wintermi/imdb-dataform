@@ -1,0 +1,31 @@
+config {
+  hasOutput: true,
+  type: "operations",
+  schema: dataform.config.vars.IMDB_RAW_DATA,
+  tags: ["LOAD_IMDB_DATA"]
+}
+
+
+CREATE OR REPLACE TABLE ${ self() }
+(
+    nconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier of the name/person.")
+  , primary_name STRING OPTIONS(description="Name by which the person is most often credited.")
+  , birth_year INT64 OPTIONS(description="Birth year in YYYY format.")
+  , death_year INT64 OPTIONS(description="Death year in YYYY format if applicable.")
+  , primary_profession STRING OPTIONS(description="The top-3 professions of the person.")
+  , known_for_titles STRING OPTIONS(description="Titles the person is known for.")
+);
+
+
+LOAD DATA INTO ${ self() }
+FROM FILES (
+  format = "CSV",
+  compression = "GZIP",
+  field_delimiter = "\t",
+  skip_leading_rows = 1,
+  allow_jagged_rows = true,
+  quote = "",
+  null_marker = "\\N",
+  uris = ["gs://${ dataform.config.vars.IMDB_GCS_BUCKET }/name.basics.tsv.gz"]
+);
+

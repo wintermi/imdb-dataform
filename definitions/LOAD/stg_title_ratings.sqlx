@@ -1,0 +1,28 @@
+config {
+  hasOutput: true,
+  type: "operations",
+  schema: dataform.config.vars.IMDB_RAW_DATA,
+  tags: ["LOAD_IMDB_DATA"]
+}
+
+
+CREATE OR REPLACE TABLE ${ self() }
+(
+    tconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier for title.")
+  , average_rating FLOAT64 OPTIONS(description="Weighted average of all the individual user ratings.")
+  , num_votes INT64 OPTIONS(description="Number of votes the title has received.")
+);
+
+
+LOAD DATA INTO ${ self() }
+FROM FILES (
+  format = "CSV",
+  compression = "GZIP",
+  field_delimiter = "\t",
+  skip_leading_rows = 1,
+  allow_jagged_rows = true,
+  quote = "",
+  null_marker = "\\N",
+  uris = ["gs://${ dataform.config.vars.IMDB_GCS_BUCKET }/title.ratings.tsv.gz"]
+);
+

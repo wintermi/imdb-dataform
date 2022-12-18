@@ -1,0 +1,27 @@
+config {
+  type: "table",
+  schema: dataform.config.vars.IMDB_BASE_DATA,
+  description: "Contains the principal cast/crew for titles",
+  columns: {
+    tconst: "Alphanumeric unique identifier of the title.",
+    ordering: "a number to uniquely identify rows for a given title_id.",
+    nconst: "Alphanumeric unique identifier of the name/person.",
+    category: "The category of job that person was in.",
+    job: "The specific job title if applicable.",
+    characters: "The name of the character played if applicable."
+  },
+  assertions: {
+    uniqueKey: ["tconst", "ordering"]
+  },
+  tags: ["TRANSFORM_IMDB_DATA"]
+}
+
+
+SELECT
+    tconst
+  , ordering
+  , nconst
+  , category
+  , job
+  , characters
+FROM ${ ref({ schema: dataform.config.vars.IMDB_RAW_DATA, name: "stg_title_principals" }) }

@@ -1,0 +1,27 @@
+config {
+  type: "table",
+  schema: dataform.config.vars.IMDB_BASE_DATA,
+  description: "Contains the detail for each name/person",
+  columns: {
+    nconst: "Alphanumeric unique identifier of the name/person.",
+    primary_name: "Name by which the person is most often credited.",
+    birth_year: "Birth year in YYYY format.",
+    death_year: "Death year in YYYY format if applicable.",
+    primary_profession: "The top-3 professions of the person.",
+    known_for_titles: "Titles the person is known for."
+  },
+  assertions: {
+    uniqueKey: ["nconst"]
+  },
+  tags: ["TRANSFORM_IMDB_DATA"]
+}
+
+
+SELECT
+    nconst
+  , primary_name
+  , birth_year
+  , death_year
+  , primary_profession
+  , known_for_titles
+FROM ${ ref({ schema: dataform.config.vars.IMDB_RAW_DATA, name: "stg_name_basics" }) }

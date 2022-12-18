@@ -1,0 +1,28 @@
+config {
+  hasOutput: true,
+  type: "operations",
+  schema: dataform.config.vars.IMDB_RAW_DATA,
+  tags: ["LOAD_IMDB_DATA"]
+}
+
+
+CREATE OR REPLACE TABLE ${ self() }
+(
+    tconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier of the title.")
+  , directors STRING OPTIONS(description="Strinng of nconsts - director(s) of the given title.")
+  , writers STRING OPTIONS(description="String of nconsts - writer(s) of the given title.")
+);
+
+
+LOAD DATA INTO ${ self() }
+FROM FILES (
+  format = "CSV",
+  compression = "GZIP",
+  field_delimiter = "\t",
+  skip_leading_rows = 1,
+  allow_jagged_rows = true,
+  quote = "",
+  null_marker = "\\N",
+  uris = ["gs://${ dataform.config.vars.IMDB_GCS_BUCKET }/title.crew.tsv.gz"]
+);
+

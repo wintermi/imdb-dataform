@@ -1,0 +1,34 @@
+config {
+  hasOutput: true,
+  type: "operations",
+  schema: dataform.config.vars.IMDB_RAW_DATA,
+  tags: ["LOAD_IMDB_DATA"]
+}
+
+
+CREATE OR REPLACE TABLE ${ self() }
+(
+    tconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier of the title.")
+  , title_type STRING OPTIONS(description="The type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc).")
+  , primary_title STRING OPTIONS(description="The more popular title / the title used by the filmmakers on promotional materials at the point of release.")
+  , original_title STRING OPTIONS(description="Original title, in the original language.")
+  , is_adult INT64 OPTIONS(description="0: non-adult title; 1: adult title.")
+  , start_year INT64 OPTIONS(description="Represents the release year of a title. In the case of TV Series, it is the series start year.")
+  , end_year INT64 OPTIONS(description="TV Series end year.")
+  , runtime_minutes INT64 OPTIONS(description="Primary runtime of the title, in minutes.")
+  , genres STRING OPTIONS(description="Includes up to three genres associated with the title.")
+);
+
+
+LOAD DATA INTO ${ self() }
+FROM FILES (
+  format = "CSV",
+  compression = "GZIP",
+  field_delimiter = "\t",
+  skip_leading_rows = 1,
+  allow_jagged_rows = true,
+  quote = "",
+  null_marker = "\\N",
+  uris = ["gs://${ dataform.config.vars.IMDB_GCS_BUCKET }/title.basics.tsv.gz"]
+);
+
