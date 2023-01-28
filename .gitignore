@@ -35,4 +35,4 @@ lerna-debug.log*
 *.old
 
 # Project Excludes
-data/*
+data/*.gz
