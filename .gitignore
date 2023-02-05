@@ -35,4 +35,6 @@ lerna-debug.log*
 *.old
 
 # Project Excludes
-data/*.gz
+data/*
+!data/.gitkeep
+
