@@ -75,9 +75,9 @@ The ```dataform.json``` contains the following parameters
 - ```assertionSchema```: Name of the BigQuery Dataset for which any Dataform Assertions are to be executed and output
 - ```defaultDatabase```: The Project ID of your Google Cloud project, which you previously took note of
 - ```defaultLocation```: Target BigQuery Location
-- ```IMDB_GCS_BUCKET```: Name of the Google Cloud Storage Bucket, which you previously took note of
-- ```IMDB_RAW_DATA```: Name of the BigQuery Dataset for which the IMDB data files are to be loaded
-- ```IMDB_BASE_DATA```: Name of the BigQuery Dataset for which the final transformed IMDB tables are to be located
+- ```LOAD_GCS_BUCKET```: Name of the Google Cloud Storage Bucket, which you previously took note of
+- ```RAW_DATA```: Name of the BigQuery Dataset for which the IMDB data files are to be loaded
+- ```BASE_DATA```: Name of the BigQuery Dataset for which the final transformed IMDB tables are to be located
 
 Here is what an example configuration looks like
 ```json
@@ -85,12 +85,12 @@ Here is what an example configuration looks like
   "defaultSchema": "imdb",
   "assertionSchema": "DF_ASSERTIONS",
   "warehouse": "bigquery",
-  "defaultDatabase": "winter-imdb-dataform-demo",
+  "defaultDatabase": "winter-dataform",
   "defaultLocation": "australia-southeast1",
   "vars": {
-    "IMDB_GCS_BUCKET": "winter-imdb",
-    "IMDB_RAW_DATA": "imdb",
-    "IMDB_BASE_DATA": "imdb"
+    "LOAD_GCS_BUCKET": "winter-data/imdb",
+    "RAW_DATA": "imdb_staging",
+    "BASE_DATA": "imdb"
   }
 }
 ```

@@ -5,8 +5,8 @@
   "defaultDatabase": "winter-dataform",
   "defaultLocation": "australia-southeast1",
   "vars": {
-    "IMDB_GCS_BUCKET": "winter-data/imdb",
-    "IMDB_RAW_DATA": "imdb_staging",
-    "IMDB_BASE_DATA": "imdb"
+    "LOAD_GCS_BUCKET": "winter-data/imdb",
+    "RAW_DATA": "imdb_staging",
+    "BASE_DATA": "imdb"
   }
 }

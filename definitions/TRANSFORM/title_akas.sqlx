@@ -1,6 +1,6 @@
 config {
   type: "table",
-  schema: dataform.config.vars.IMDB_BASE_DATA,
+  schema: dataform.projectConfig.vars.BASE_DATA,
   description: "Contains the also known as (AKA) for titles",
   columns: {
     title_id: "A tconst, an alphanumeric unique identifier of the title.",
@@ -12,10 +12,11 @@ config {
     attributes: "Additional terms to describe this alternative title, not enumerated",
     is_original_title: "False: not original title; True: original title."
   },
+  dependencies: ["stg_title_akas_uniqueKey"],
   assertions: {
     uniqueKey: ["title_id", "ordering"]
   },
-  tags: ["TRANSFORM_IMDB_DATA"]
+  tags: ["TRANSFORM_DATA"]
 }
 
 
@@ -28,4 +29,4 @@ SELECT
   , types
   , attributes
   , is_original_title
-FROM ${ ref({ schema: dataform.config.vars.IMDB_RAW_DATA, name: "stg_title_akas" }) }
+FROM ${ ref({ schema: dataform.projectConfig.vars.RAW_DATA, name: "stg_title_akas" }) }

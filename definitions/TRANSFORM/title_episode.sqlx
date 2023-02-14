@@ -1,6 +1,6 @@
 config {
   type: "table",
-  schema: dataform.config.vars.IMDB_BASE_DATA,
+  schema: dataform.projectConfig.vars.BASE_DATA,
   description: "Contains the TV Series episode information",
   columns: {
     tconst: "Alphanumeric identifier of episode.",
@@ -8,10 +8,11 @@ config {
     season_number: "Season number the episode belongs to.",
     episode_number: "Episode number of the tconst in the TV series."
   },
+  dependencies: ["stg_title_episode_uniqueKey"],
   assertions: {
     uniqueKey: ["tconst"]
   },
-  tags: ["TRANSFORM_IMDB_DATA"]
+  tags: ["TRANSFORM_DATA"]
 }
 
 
@@ -20,4 +21,4 @@ SELECT
   , parent_tconst
   , season_number
   , episode_number
-FROM ${ ref({ schema: dataform.config.vars.IMDB_RAW_DATA, name: "stg_title_episode" }) }
+FROM ${ ref({ schema: dataform.projectConfig.vars.RAW_DATA, name: "stg_title_episode" }) }

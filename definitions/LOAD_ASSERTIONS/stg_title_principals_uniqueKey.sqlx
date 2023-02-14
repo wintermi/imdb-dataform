@@ -1,0 +1,13 @@
+config {
+  type: "assertion",
+  tags: ["LOAD_ASSERTIONS"]
+}
+
+
+SELECT
+    tconst
+  , ordering
+  , COUNT(*) AS index_row_count
+FROM ${ ref({ schema: dataform.projectConfig.vars.RAW_DATA, name: "stg_title_principals" }) }
+GROUP BY 1, 2
+HAVING index_row_count > 1

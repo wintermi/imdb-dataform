@@ -1,0 +1,12 @@
+config {
+  type: "assertion",
+  tags: ["LOAD_ASSERTIONS"]
+}
+
+
+SELECT
+    nconst
+  , COUNT(*) AS index_row_count
+FROM ${ ref({ schema: dataform.projectConfig.vars.RAW_DATA, name: "stg_name_basics" }) }
+GROUP BY 1
+HAVING index_row_count > 1

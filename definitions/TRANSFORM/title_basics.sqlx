@@ -1,6 +1,6 @@
 config {
   type: "table",
-  schema: dataform.config.vars.IMDB_BASE_DATA,
+  schema: dataform.projectConfig.vars.BASE_DATA,
   description: " Contains the detail for titles",
   columns: {
     tconst: "Alphanumeric unique identifier of the title.",
@@ -13,10 +13,11 @@ config {
     runtime_minutes: "Primary runtime of the title, in minutes.",
     genres: "Includes up to three genres associated with the title."
   },
+  dependencies: ["stg_title_basics_uniqueKey"],
   assertions: {
     uniqueKey: ["tconst"]
   },
-  tags: ["TRANSFORM_IMDB_DATA"]
+  tags: ["TRANSFORM_DATA"]
 }
 
 
@@ -30,4 +31,4 @@ SELECT
   , end_year
   , runtime_minutes
   , genres
-FROM ${ ref({ schema: dataform.config.vars.IMDB_RAW_DATA, name: "stg_title_basics" }) }
+FROM ${ ref({ schema: dataform.projectConfig.vars.RAW_DATA, name: "stg_title_basics" }) }

@@ -1,16 +1,17 @@
 config {
   type: "table",
-  schema: dataform.config.vars.IMDB_BASE_DATA,
+  schema: dataform.projectConfig.vars.BASE_DATA,
   description: "Contains the director and writer information for all the titles",
   columns: {
     tconst: "Alphanumeric unique identifier of the title.",
     directors: "Strinng of nconsts - director(s) of the given title.",
     writers: "String of nconsts - writer(s) of the given title."
   },
+  dependencies: ["stg_title_crew_uniqueKey"],
   assertions: {
     uniqueKey: ["tconst"]
   },
-  tags: ["TRANSFORM_IMDB_DATA"]
+  tags: ["TRANSFORM_DATA"]
 }
 
 
@@ -18,4 +19,4 @@ SELECT
     tconst
   , directors
   , writers
-FROM ${ ref({ schema: dataform.config.vars.IMDB_RAW_DATA, name: "stg_title_crew" }) }
+FROM ${ ref({ schema: dataform.projectConfig.vars.RAW_DATA, name: "stg_title_crew" }) }

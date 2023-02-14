@@ -1,8 +1,8 @@
 config {
   hasOutput: true,
   type: "operations",
-  schema: dataform.config.vars.IMDB_RAW_DATA,
-  tags: ["LOAD_IMDB_DATA"]
+  schema: dataform.projectConfig.vars.RAW_DATA,
+  tags: ["LOAD_DATA"]
 }
 
 
@@ -29,6 +29,6 @@ FROM FILES (
   allow_jagged_rows = true,
   quote = "",
   null_marker = "\\N",
-  uris = ["gs://${ dataform.config.vars.IMDB_GCS_BUCKET }/title.basics.tsv.gz"]
+  uris = ["gs://${ dataform.projectConfig.vars.LOAD_GCS_BUCKET }/title.basics.tsv.gz"]
 );
 
