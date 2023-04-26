@@ -6,7 +6,7 @@ config {
 }
 
 
-CREATE OR REPLACE TABLE ${ self() }
+LOAD DATA OVERWRITE ${ self() }
 (
     tconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier of the title.")
   , ordering INT64 OPTIONS(description="a number to uniquely identify rows for a given title_id.")
@@ -14,10 +14,7 @@ CREATE OR REPLACE TABLE ${ self() }
   , category STRING OPTIONS(description="The category of job that person was in.")
   , job STRING OPTIONS(description="The specific job title if applicable.")
   , characters STRING OPTIONS(description="The name of the character played if applicable.")
-);
-
-
-LOAD DATA INTO ${ self() }
+)
 FROM FILES (
   format = "CSV",
   compression = "GZIP",

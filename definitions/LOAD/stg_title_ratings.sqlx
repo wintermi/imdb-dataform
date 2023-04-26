@@ -6,15 +6,12 @@ config {
 }
 
 
-CREATE OR REPLACE TABLE ${ self() }
+LOAD DATA OVERWRITE ${ self() }
 (
     tconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier for title.")
   , average_rating FLOAT64 OPTIONS(description="Weighted average of all the individual user ratings.")
   , num_votes INT64 OPTIONS(description="Number of votes the title has received.")
-);
-
-
-LOAD DATA INTO ${ self() }
+)
 FROM FILES (
   format = "CSV",
   compression = "GZIP",

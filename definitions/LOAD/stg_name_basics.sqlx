@@ -5,8 +5,7 @@ config {
   tags: ["LOAD_DATA"]
 }
 
-
-CREATE OR REPLACE TABLE ${ self() }
+LOAD DATA OVERWRITE ${ self() }
 (
     nconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier of the name/person.")
   , primary_name STRING OPTIONS(description="Name by which the person is most often credited.")
@@ -14,10 +13,7 @@ CREATE OR REPLACE TABLE ${ self() }
   , death_year INT64 OPTIONS(description="Death year in YYYY format if applicable.")
   , primary_profession STRING OPTIONS(description="The top-3 professions of the person.")
   , known_for_titles STRING OPTIONS(description="Titles the person is known for.")
-);
-
-
-LOAD DATA INTO ${ self() }
+)
 FROM FILES (
   format = "CSV",
   compression = "GZIP",

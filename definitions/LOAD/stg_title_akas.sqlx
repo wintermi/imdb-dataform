@@ -6,7 +6,7 @@ config {
 }
 
 
-CREATE OR REPLACE TABLE ${ self() }
+LOAD DATA OVERWRITE ${ self() }
 (
     title_id STRING NOT NULL OPTIONS(description="A tconst, an alphanumeric unique identifier of the title.")
   , ordering INT64 OPTIONS(description="A number to uniquely identify rows for a given title_id.")
@@ -16,10 +16,7 @@ CREATE OR REPLACE TABLE ${ self() }
   , types STRING OPTIONS(description="Enumerated set of attributes for this alternative title. One or more of the following: 'alternative', 'dvd', 'festival', 'tv', 'video', 'working', 'original', 'imdbDisplay'. New values may be added in the future without warning.")
   , attributes STRING OPTIONS(description="Additional terms to describe this alternative title, not enumerated")
   , is_original_title BOOL OPTIONS(description="False: not original title; True: original title.")
-);
-
-
-LOAD DATA INTO ${ self() }
+)
 FROM FILES (
   format = "CSV",
   compression = "GZIP",

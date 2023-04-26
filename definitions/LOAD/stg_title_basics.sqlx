@@ -6,7 +6,7 @@ config {
 }
 
 
-CREATE OR REPLACE TABLE ${ self() }
+LOAD DATA OVERWRITE ${ self() }
 (
     tconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier of the title.")
   , title_type STRING OPTIONS(description="The type/format of the title (e.g. movie, short, tvseries, tvepisode, video, etc).")
@@ -17,10 +17,7 @@ CREATE OR REPLACE TABLE ${ self() }
   , end_year INT64 OPTIONS(description="TV Series end year.")
   , runtime_minutes INT64 OPTIONS(description="Primary runtime of the title, in minutes.")
   , genres STRING OPTIONS(description="Includes up to three genres associated with the title.")
-);
-
-
-LOAD DATA INTO ${ self() }
+)
 FROM FILES (
   format = "CSV",
   compression = "GZIP",

@@ -6,15 +6,12 @@ config {
 }
 
 
-CREATE OR REPLACE TABLE ${ self() }
+LOAD DATA OVERWRITE ${ self() }
 (
     tconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier of the title.")
   , directors STRING OPTIONS(description="Strinng of nconsts - director(s) of the given title.")
   , writers STRING OPTIONS(description="String of nconsts - writer(s) of the given title.")
-);
-
-
-LOAD DATA INTO ${ self() }
+)
 FROM FILES (
   format = "CSV",
   compression = "GZIP",
