@@ -17,12 +17,10 @@ LOAD DATA OVERWRITE ${ self() }
 )
 FROM FILES (
   format = "CSV",
-  compression = "GZIP",
   field_delimiter = "\t",
   skip_leading_rows = 1,
   allow_jagged_rows = true,
   quote = "",
   null_marker = "\\N",
-  uris = ["gs://${ dataform.projectConfig.vars.LOAD_GCS_BUCKET }/title.principals.tsv.gz"]
+  uris = ["gs://${ dataform.projectConfig.vars.LOAD_GCS_BUCKET }/title.principals.tsv"]
 );
-

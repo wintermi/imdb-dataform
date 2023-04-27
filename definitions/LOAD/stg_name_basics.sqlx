@@ -5,6 +5,7 @@ config {
   tags: ["LOAD_DATA"]
 }
 
+
 LOAD DATA OVERWRITE ${ self() }
 (
     nconst STRING NOT NULL OPTIONS(description="Alphanumeric unique identifier of the name/person.")
@@ -16,12 +17,10 @@ LOAD DATA OVERWRITE ${ self() }
 )
 FROM FILES (
   format = "CSV",
-  compression = "GZIP",
   field_delimiter = "\t",
   skip_leading_rows = 1,
   allow_jagged_rows = true,
   quote = "",
   null_marker = "\\N",
-  uris = ["gs://${ dataform.projectConfig.vars.LOAD_GCS_BUCKET }/name.basics.tsv.gz"]
+  uris = ["gs://${ dataform.projectConfig.vars.LOAD_GCS_BUCKET }/name.basics.tsv"]
 );
-
