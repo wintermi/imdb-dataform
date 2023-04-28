@@ -32,5 +32,3 @@ gunzip "$IMDB_DATA_DIR/title.principals.tsv.gz"
 print "\nDownloading 'title.ratings.tsv.gz' ...\n"
 curl -SL -o "$IMDB_DATA_DIR/title.ratings.tsv.gz" "https://datasets.imdbws.com/title.ratings.tsv.gz"
 gunzip "$IMDB_DATA_DIR/title.ratings.tsv.gz"
-
-gsutil mv "$IMDB_DATA_DIR/*.tsv" "$1"
