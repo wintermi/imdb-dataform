@@ -1,6 +1,6 @@
 {
   "name": "imdb-dataform",
   "dependencies": {
-    "@dataform/core": "^2.6.5"
+    "@dataform/core": "^2.6.6"
   }
 }
